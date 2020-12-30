@@ -1,0 +1,1 @@
+web: gunicorn group5server.wsgi --log-file -
