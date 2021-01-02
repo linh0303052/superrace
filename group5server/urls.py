@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from account import views as acc
+from event import views as event
+from activity import views as act
+from joinevent import views as jevent
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
@@ -23,6 +26,18 @@ urlpatterns = [
     path('login/', acc.login),
     path('register/', acc.register),
     path('getuser/<username>/', acc.getUser),
+    path('createactivity/', act.post_activity),
+    path('getactivities/<username>/', act.get_activities),
+    path('getimage/<typee>/<filename>/', act.get_image),
+    # path('seteventimage/', act.set_image_event),
+    path('joinevent/', jevent.join_event),
+    path('leaveevent/', jevent.leave_event),
+    path('createevent/', event.create_event),
+    path('getevent/', event.get_event),
+    path('deleteevent/', event.delete_event),
+    path('getnewevents/<username>/', event.get_new_event),
+    path('getjoinedevents/<username>/', event.get_joined_event),
+    path('getcreatedevents/<username>/', event.get_created_events),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

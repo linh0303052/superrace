@@ -13,6 +13,8 @@ import base64
 import json
 
 # Create your views here.
+
+
 def register(request):
     data = {'success': False}
     if (request.method == 'POST'):
@@ -144,10 +146,11 @@ def getUser(request, username):
         data['message'] = 'method not supported'
     return HttpResponse(json.dumps(data), content_type='application/json')
 
-#0supported_extension = ['jpg', 'jpeg', 'bmp', 'svg', 'png']
+# 0supported_extension = ['jpg', 'jpeg', 'bmp', 'svg', 'png']
+
 
 def avatar2(request):
-    data = {'success':False}
+    data = {'success': False}
     if (request.method == 'POST'):
         username = request.POST['username']
         filename = handle_base64_str(request.POST['image'], username)
@@ -160,38 +163,13 @@ def avatar2(request):
 def handle_base64_str(imgstring, filename):
     imgdata = base64.b64decode(imgstring)
     with open('staticfiles/avatar/'+filename+'.png', 'wb+') as destination:
-            destination.write(imgdata)
+        destination.write(imgdata)
     return filename
-
-
-# def avatar(request):
-#     data = {'success': False}
-#     if (request.method == 'POST'):
-#         username = request.POST['username']
-#         f = request.POST['file']
-#         extension = 'png'
-#         # if extension not in supported_extension:
-#         #     data['message'] = 'extension not supported'
-#         #     return HttpResponse(json.dumps(data), content_type='application/json')
-
-#         filename = handle_uploaded_image(f, username, extension)
-#         data['success'] = True
-#     else:
-#         data['message'] = 'method not supported'
-#     return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-# def handle_uploaded_image(f, filename, extension):
-#     filename = 'staticfiles/avatar/%s.%s' % (filename, extension)
-#     with open(filename, 'wb+') as destination:
-#         for chunk in f.chunks():
-#             destination.write(chunk)
-#     return filename
 
 
 def getavatar(request, filename):
     if (request.method == 'GET'):
-        with open('staticfiles/avatar/%s'%(filename), "rb") as f:
+        with open('staticfiles/avatar/%s' % (filename), "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
     else:
         return HttpResponse('method not supported')
