@@ -15,7 +15,8 @@ def post_activity(request):
     # save activity
     data = {'success': False}
     if request.method == 'POST':
-        user = Account.objects.get(username=request.POST['username'])
+        username = request.POST['username']
+        user = Account.objects.get(username=username)
         start_time = datetime.datetime.now()
         duration = request.POST['duration']
         distance = float(request.POST['distance'])
@@ -55,7 +56,7 @@ def post_activity(request):
 
 def handle_base64_str(imgstring, username, start_time):
     imgdata = base64.b64decode(imgstring)
-    start_time = start_time.strftime('%Y%m%d%H%m%s')
+    start_time = start_time.strftime('%Y%m%d%H%M%S')
     file_url = 'http://superrace.herokuapp.com/getimage/activity/%s%s.png' % (
         username, start_time)
     with open('staticfiles/activity/'+username+start_time+'.png', 'wb+') as destination:

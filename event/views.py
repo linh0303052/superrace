@@ -14,7 +14,8 @@ from account.models import Account
 def create_event(request):
     data = {'success': False}
     if request.method == 'POST':
-        user = Account.objects.get(username=request.POST['username'])
+        username = request.POST['username']
+        user = Account.objects.get(username=username)
         title = request.POST['title']
         description = request.POST['description']
         start_date = request.POST['start_date']
@@ -36,7 +37,7 @@ def create_event(request):
 
 def handle_base64_str(imgstring, username, start_date):
     imgdata = base64.b64decode(imgstring)
-    start_date = start_date.strftime('%Y%m%d%H%m%s')
+    start_date = start_date.strftime('%Y%m%d%H%M%S')
     file_url = 'http://superrace.herokuapp.com/getimage/event/%s%s.png' % (
         username, start_date)
     with open('staticfiles/event/'+username+start_date+'.png', 'wb+') as destination:
