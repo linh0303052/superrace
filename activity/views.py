@@ -68,6 +68,7 @@ def get_activities(request, username):
     data = {'success': False}
     if request.method == 'GET':
         user = Account.objects.get(username=username)
+        data['display_name'] = user.first_name + " " + user.last_name
         activities = Activity.objects.filter(user=user).order_by('start_time')
         data['activities'] = []
         for activity in activities:

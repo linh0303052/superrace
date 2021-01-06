@@ -61,6 +61,7 @@ def get_new_event(request, username):
     data = {'success': False}
     if request.method == 'GET':
         user = Account.objects.get(username=username)
+        data['display_name'] = user.first_name + " " + user.last_name
         events = Event.objects.exclude(back_event__user=user, is_deleted=False)
         data['new_events'] = []
         for event in events:
@@ -75,6 +76,7 @@ def get_joined_event(request, username):
     data = {'success': False}
     if request.method == 'GET':
         user = Account.objects.get(username=username)
+        data['display_name'] = user.first_name + " " + user.last_name
         events = Event.objects.filter(back_event__user=user, is_deleted=False)
         data['joined_events'] = []
         for event in events:
@@ -89,6 +91,7 @@ def get_created_events(request, username):
     data = {'success': False}
     if request.method == 'GET':
         user = Account.objects.get(username=username)
+        data['display_name'] = user.first_name + " " + user.last_name
         events = Event.objects.filter(user=user, is_deleted=False)
         data['created_events'] = []
         for event in events:
